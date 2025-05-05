@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { posts, type Post } from '../data/posts' // Use relative path
+import { posts, type Post } from '../../../data/posts' // Use relative path
 
 const route = useRoute()
 const postId = computed(() => Number(route.params.id))

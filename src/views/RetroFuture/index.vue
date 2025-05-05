@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { posts, type Post } from '../data/posts' // Use relative path
+import { posts, type Post } from '../../data/posts'
 
 const router = useRouter()
 
@@ -9,11 +9,7 @@ function viewPost(post: Post) {
   router.push({ name: 'post', params: { id: post.id } })
 }
 
-// Function to resolve image paths assuming they are in public/assets/images/
-// Vite handles public assets relative to the root.
 const getImageUrl = (imgPath: string) => {
-  // Expects imgPath like './assets/images/post1.jpg'
-  // Needs to be relative to the public folder, e.g., /assets/images/post1.jpg
   return imgPath.replace('./', '/')
 }
 </script>
@@ -24,16 +20,13 @@ const getImageUrl = (imgPath: string) => {
       <div class="stars"></div>
       <div class="twinkling"></div>
       <div class="moon"></div>
-      <!-- Assuming moon is styled via CSS -->
       <div class="hero-content">
-        <h1>Chronicles from the Retro-Future</h1>
-        <p>Exploring yesterday's tomorrows, today.</p>
+        <h1>复古未来编年史</h1>
+        <p>探索昨日的未来，就在今天。</p>
       </div>
     </div>
-
-    <!-- Apply gradient background potentially here or on a wrapper -->
     <div class="content-background-gradient">
-      <h2>Latest Transmissions</h2>
+      <h2>最新文章</h2>
       <div class="blog-posts">
         <div v-for="post in posts" :key="post.id" class="post-card">
           <img
@@ -42,9 +35,9 @@ const getImageUrl = (imgPath: string) => {
             style="width: 100%; height: 150px; object-fit: cover"
           />
           <h3>{{ post.title }}</h3>
-          <p class="meta">By {{ post.author }} on {{ post.date }}</p>
+          <p class="meta">作者：{{ post.author }}　日期：{{ post.date }}</p>
           <p>{{ post.excerpt }}</p>
-          <button @click="viewPost(post)">Read Transmission</button>
+          <button @click="viewPost(post)">阅读全文</button>
         </div>
       </div>
     </div>
@@ -52,17 +45,45 @@ const getImageUrl = (imgPath: string) => {
 </template>
 
 <style scoped>
-/* Add component-specific styles if needed */
-.hero {
-  /* Styles moved to global style.css, but can override here */
-}
-
-.blog-posts {
-  /* Styles moved to global style.css, but can override here */
-}
-
-.post-card img {
+.hero-content h1 {
+  font-size: 1.5rem;
   margin-bottom: 1rem;
-  border-radius: 2px;
+}
+
+.hero-content p {
+  font-size: 0.8rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+
+.post-card h3 {
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+.post-card p {
+  font-size: 0.7rem;
+  line-height: 1.8;
+}
+
+.post-card button {
+  font-size: 0.7rem;
+  padding: 0.5rem 1rem;
+}
+
+.moon {
+  position: absolute;
+  margin-left: 3%;
+  top: 30px;
+  right: 40px;
+  width: 80px;
+  height: 80px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #ffffff, inset 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 </style>

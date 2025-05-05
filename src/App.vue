@@ -3,9 +3,9 @@ import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
 const navItems = ref([
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
+  { name: '首页', path: '/' },
+  { name: '关于', path: '/about' },
+  { name: '联系', path: '/contact' },
 ])
 
 const showMobileMenu = ref(false)
@@ -25,7 +25,7 @@ function closeMobileMenu() {
 
     <header>
       <div class="header-content">
-        <div class="logo">Retro-Future Blog</div>
+        <div class="logo">复古未来博客</div>
         <nav class="desktop-nav">
           <ul>
             <li v-for="item in navItems" :key="item.path">
@@ -52,13 +52,18 @@ function closeMobileMenu() {
     </main>
 
     <footer>
-      <p>&copy; 2099 Commander Alex Novak. All transmissions archived.</p>
+      <p>&copy; 2099 指挥官 亚历克斯·诺瓦克。所有内容均已存档。</p>
     </footer>
   </div>
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'WenQuanDengKuan';
+  src: url('https://cdn.jsdelivr.net/npm/wenquanyi-dengxian-ttf@1.0.0/WenQuanDengKuan.ttf');
+}
 
 :root {
   --color-bg: #1c1c1c;
@@ -66,8 +71,8 @@ function closeMobileMenu() {
   --color-primary: #ffd700;
   --color-secondary: #e67e22;
   --color-accent: #8b4513;
-  --font-main: 'Playfair Display', serif;
-  --font-mono: 'Space Mono', monospace;
+  --font-main: 'WenQuanDengKuan', monospace;
+  --font-mono: 'WenQuanDengKuan', monospace;
 }
 
 * {
@@ -79,9 +84,10 @@ function closeMobileMenu() {
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-main);
-  line-height: 1.6;
+  font-family: 'WenQuanDengKuan', monospace !important;
+  line-height: 2;
   overflow-x: hidden;
+  font-size: 16px;
 }
 
 .app-container {
@@ -128,7 +134,7 @@ body {
 .nav-link {
   color: var(--color-text);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.8rem;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: all 0.3s ease;
@@ -192,8 +198,8 @@ header {
 }
 
 .logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-family: var(--font-main);
+  font-size: 1.2rem;
   color: var(--primary-color);
 }
 
