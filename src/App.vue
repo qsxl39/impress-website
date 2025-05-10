@@ -52,7 +52,7 @@ function closeMobileMenu() {
     </main>
 
     <footer>
-      <p>&copy; 2099 指挥官 亚历克斯·诺瓦克。所有内容均已存档。</p>
+      <p>&copy; 致敬我们未曾到来的将来</p>
     </footer>
   </div>
 </template>

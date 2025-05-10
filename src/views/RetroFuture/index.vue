@@ -21,12 +21,11 @@ const getImageUrl = (imgPath: string) => {
       <div class="twinkling"></div>
       <div class="moon"></div>
       <div class="hero-content">
-        <h1>复古未来编年史</h1>
-        <p>探索昨日的未来，就在今天。</p>
+        <h1>RETROSPEKTA ESTONTO</h1>
+        <p>"Omaĝo al ĉiuj neniam venontaj estontecoj"</p>
       </div>
     </div>
     <div class="content-background-gradient">
-      <h2>最新文章</h2>
       <div class="blog-posts">
         <div v-for="post in posts" :key="post.id" class="post-card">
           <img
