@@ -26,7 +26,7 @@ const getImageUrl = (imgPath: string) => {
       </div>
     </div>
     <div class="content-background-gradient">
-      <div class="blog-posts">
+      <div class="blog-posts" style="margin-bottom: 500px">
         <div v-for="post in posts" :key="post.id" class="post-card">
           <img
             :src="getImageUrl(post.image)"

@@ -3,9 +3,10 @@ import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
 const navItems = ref([
-  { name: '首页', path: '/' },
-  { name: '关于', path: '/about' },
-  { name: '联系', path: '/contact' },
+  { name: '复古未来', path: '/retro-future' },
+  { name: '花野异梦', path: '/dreamcore' },
+  { name: '海上轨道', path: '/railway' },
+  { name: '复古未来', path: '/escape-reality' },
 ])
 
 const showMobileMenu = ref(false)
@@ -25,7 +26,7 @@ function closeMobileMenu() {
 
     <header>
       <div class="header-content">
-        <div class="logo">复古未来博客</div>
+        <div class="logo">RetroFuture</div>
         <nav class="desktop-nav">
           <ul>
             <li v-for="item in navItems" :key="item.path">
