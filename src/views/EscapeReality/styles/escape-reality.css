@@ -1,0 +1,166 @@
+/* EscapeReality Theme - 梦幻迷离风格 */
+.escape-reality-theme {
+  /* 基础变量 */
+  --primary-color: #ff69b4; /* 梦幻粉 */
+  --secondary-color: #9370db; /* 紫色 */
+  --text-color: #f8f8ff; /* 幽灵白 */
+  --background-color: #1a1a2e; /* 深蓝黑 */
+  --panel-color: rgba(26, 26, 46, 0.85); /* 半透明深蓝黑 */
+  --border-color: #4b0082; /* 靛青色 */
+  --accent-color: #00ffff; /* 青色 */
+  --glow-color: rgba(255, 105, 180, 0.7); /* 粉色发光 */
+  --font-mono: 'Space Mono', monospace;
+  --font-display: 'VT323', monospace;
+}
+
+.escape-reality-theme {
+  /* 基础样式 */
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 梦幻背景效果 */
+.escape-reality-theme::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(147, 112, 219, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 容器样式 */
+.escape-reality-theme .escape-reality-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* 头部样式 */
+.escape-reality-theme header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* 链接样式 */
+.escape-reality-theme a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.escape-reality-theme a:hover {
+  color: var(--primary-color);
+  text-shadow: 0 0 8px var(--glow-color);
+}
+
+/* 卡片样式 */
+.escape-reality-theme .post-card {
+  background: var(--panel-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.escape-reality-theme .post-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 105, 180, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.escape-reality-theme .post-card:hover::before {
+  transform: translateX(100%);
+}
+
+.escape-reality-theme .post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+  border-color: var(--primary-color);
+}
+
+/* 按钮样式 */
+.escape-reality-theme button {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: var(--text-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.escape-reality-theme button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--glow-color);
+}
+
+/* 动画效果 */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--glow-color);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--glow-color);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .escape-reality-theme header {
+    padding: 1rem;
+  }
+
+  .escape-reality-theme .post-card {
+    margin: 1rem;
+  }
+}

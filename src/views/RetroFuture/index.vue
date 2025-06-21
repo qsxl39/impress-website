@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { posts, type Post } from '../../data/posts'
+import './styles/retro-future.css'
 
 const router = useRouter()
 
@@ -15,28 +16,30 @@ const getImageUrl = (imgPath: string) => {
 </script>
 
 <template>
-  <div class="home-page">
-    <div class="hero">
-      <div class="stars"></div>
-      <div class="twinkling"></div>
-      <div class="moon"></div>
-      <div class="hero-content">
-        <h1>RETROSPEKTA ESTONTO</h1>
-        <p>"Omaĝo al ĉiuj neniam venontaj estontecoj"</p>
+  <div class="retro-future-theme">
+    <div class="home-page">
+      <div class="hero">
+        <div class="stars"></div>
+        <div class="twinkling"></div>
+        <div class="moon"></div>
+        <div class="hero-content">
+          <h1>RETROSPEKTA ESTONTO</h1>
+          <p>"Omaĝo al ĉiuj neniam venontaj estontecoj"</p>
+        </div>
       </div>
-    </div>
-    <div class="content-background-gradient">
-      <div class="blog-posts" style="margin-bottom: 500px">
-        <div v-for="post in posts" :key="post.id" class="post-card">
-          <img
-            :src="getImageUrl(post.image)"
-            :alt="post.title"
-            style="width: 100%; height: 150px; object-fit: cover"
-          />
-          <h3>{{ post.title }}</h3>
-          <p class="meta">作者：{{ post.author }}　日期：{{ post.date }}</p>
-          <p>{{ post.excerpt }}</p>
-          <button @click="viewPost(post)">阅读全文</button>
+      <div class="content-background-gradient">
+        <div class="blog-posts" style="margin-bottom: 500px">
+          <div v-for="post in posts" :key="post.id" class="post-card">
+            <img
+              :src="getImageUrl(post.image)"
+              :alt="post.title"
+              style="width: 100%; height: 150px; object-fit: cover"
+            />
+            <h3>{{ post.title }}</h3>
+            <p class="meta">作者：{{ post.author }}　日期：{{ post.date }}</p>
+            <p>{{ post.excerpt }}</p>
+            <button @click="viewPost(post)">阅读全文</button>
+          </div>
         </div>
       </div>
     </div>

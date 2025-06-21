@@ -1,0 +1,190 @@
+/* Railway Theme - 蒸汽朋克风格 */
+.railway-theme {
+  /* 基础变量 */
+  --primary-color: #d4af37; /* 金色 */
+  --secondary-color: #8b4513; /* 棕色 */
+  --text-color: #deb887; /* 实木色 */
+  --background-color: #2c1810; /* 深棕色 */
+  --panel-color: rgba(44, 24, 16, 0.9); /* 半透明深棕 */
+  --border-color: #654321; /* 深木色 */
+  --accent-color: #ff4500; /* 红橙色 */
+  --metal-color: #708090; /* 金属灰 */
+  --font-mono: 'Space Mono', monospace;
+  --font-display: 'VT323', monospace;
+}
+
+.railway-theme {
+  /* 基础样式 */
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-image: linear-gradient(45deg, var(--metal-color) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--metal-color) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--metal-color) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--metal-color) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  background-color: var(--background-color);
+}
+
+/* 容器样式 */
+.railway-theme .railway-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  border: 2px solid var(--metal-color);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 头部样式 */
+.railway-theme header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(to bottom, var(--metal-color), var(--panel-color));
+  border-bottom: 3px solid var(--primary-color);
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 导航样式 */
+.railway-theme nav a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--primary-color);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.railway-theme nav a:hover {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* 卡片样式 */
+.railway-theme .post-card {
+  background: var(--panel-color);
+  border: 2px solid var(--metal-color);
+  padding: 1.5rem;
+  position: relative;
+  margin: 1rem;
+  box-shadow: 0 0 0 2px var(--background-color), 0 0 0 4px var(--metal-color);
+}
+
+.railway-theme .post-card::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, var(--primary-color), transparent);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.railway-theme .post-card:hover::before {
+  opacity: 0.2;
+}
+
+.railway-theme .post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 0 2px var(--background-color),
+    0 0 0 4px var(--primary-color);
+}
+
+/* 按钮样式 */
+.railway-theme button {
+  background: var(--metal-color);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  padding: 0.8rem 1.5rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.railway-theme button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.railway-theme button:hover::before {
+  left: 100%;
+}
+
+.railway-theme button:hover {
+  background: var(--primary-color);
+  color: var(--background-color);
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* 装饰元素 */
+.railway-theme .gear {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--metal-color);
+  border-radius: 50%;
+  animation: rotate 10s linear infinite;
+}
+
+.railway-theme .gear::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: var(--metal-color);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .railway-theme header {
+    padding: 1rem;
+  }
+
+  .railway-theme .post-card {
+    margin: 0.5rem;
+  }
+
+  .railway-theme nav a {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
