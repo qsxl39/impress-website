@@ -67,6 +67,30 @@
   position: relative;
   overflow: hidden;
   background-color: #000103;
+  padding: 2rem;
+}
+
+.retro-future-theme .hero-content {
+  text-align: center;
+  z-index: 2;
+  padding: 2.5rem 3rem;
+  border-radius: 2px;
+  border: 2px solid var(--primary-color);
+}
+
+.retro-future-theme .hero-content h1 {
+  font-family: var(--font-display);
+  font-size: 3.5rem; /* 增大字体 */
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.retro-future-theme .hero-content p {
+  font-family: var(--font-mono);
+  font-size: 1rem; /* 增大字体 */
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0 auto;
 }
 
 .retro-future-theme .stars {
@@ -101,5 +125,3 @@
     background-position: -10000px 5000px;
   }
 }
-
-/* 其他样式... */

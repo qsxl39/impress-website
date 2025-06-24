@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { posts, type Post } from '../../data/posts'
 import './styles/retro-future.css'
+import AppHeader from '../../components/AppHeader.vue'
+import AppFooter from '../../components/AppFooter.vue'
 
 const router = useRouter()
 
@@ -11,20 +12,25 @@ function viewPost(post: Post) {
 }
 
 const getImageUrl = (imgPath: string) => {
-  return imgPath.replace('./', '/')
+  return imgPath
 }
 </script>
 
 <template>
   <div class="retro-future-theme">
-    <div class="home-page">
+    <div class="crt-overlay"></div>
+    <AppHeader theme-class="retro-future-theme" />
+    <main class="retro-future-container">
       <div class="hero">
         <div class="stars"></div>
         <div class="twinkling"></div>
         <div class="moon"></div>
         <div class="hero-content">
-          <h1>RETROSPEKTA ESTONTO</h1>
-          <p>"Omaĝo al ĉiuj neniam venontaj estontecoj"</p>
+          <h1>Exploring Tomorrow<br />With Yesterday's Tools</h1>
+          <p>
+            A personal chronicle of space exploration and the<br />beautiful contradiction of
+            retro-futurism
+          </p>
         </div>
       </div>
       <div class="content-background-gradient">
@@ -42,7 +48,8 @@ const getImageUrl = (imgPath: string) => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
+    <AppFooter theme-class="retro-future-theme" />
   </div>
 </template>
 

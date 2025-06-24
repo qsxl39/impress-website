@@ -1,5 +1,7 @@
+/* Global styles can be added here if needed in the future. */
+
 /* Base Styles */
-:root {
+/* :root {
   --primary-color: #f4d03f;
   --secondary-color: #16a085;
   --text-color: #e0e0e0;
@@ -9,7 +11,7 @@
   --accent-color: #e74c3c;
   --font-mono: 'Space Mono', monospace;
   --font-display: 'VT323', monospace;
-}
+} */
 
 /* 容器与背景设置 */
 .retro-future-container {

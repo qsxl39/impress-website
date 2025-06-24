@@ -1,16 +1,3 @@
-/* Base Styles */
-:root {
-  --primary-color: #f4d03f; /* Bright yellow */
-  --secondary-color: #16a085; /* Teal */
-  --text-color: #e0e0e0; /* Light grey */
-  --background-color: #0a1128; /* Deep blue */
-  --panel-color: rgba(10, 17, 40, 0.85); /* Semi-transparent deep blue */
-  --border-color: #2c3e50; /* Darker blue/grey */
-  --accent-color: #e74c3c; /* Red */
-  --glow-color: rgba(0, 191, 255, 0.7); /* Cyan glow for borders/shadows */
-  --font-mono: 'Space Mono', monospace;
-  --font-display: 'VT323', monospace;
-}
 
 *,
 *::before,
@@ -144,14 +131,14 @@ main {
 }
 
 .stars {
-  background: #000 url('./YKY28eT.png') repeat top center;
+  background: #000 url('../images/YKY28eT.png') repeat top center;
   z-index: 0;
   opacity: 1; /* Animated */
   animation: twinkle-stars 4s ease-in-out infinite;
 }
 
 .twinkling {
-  background: transparent url('./XYMF4ca.png') repeat top center;
+  background: transparent url('../images/XYMF4ca.png') repeat top center;
   z-index: 1;
   animation: move-twink-back 200s linear infinite;
 }
@@ -202,10 +189,10 @@ main {
   position: relative;
   z-index: 10;
   text-align: center;
-  background-color: var(--panel-color);
-  border: 1px solid var(--glow-color);
+  background-color: rgba(10, 17, 40, 0.7);
+  /* border: 1px solid var(--glow-color); */
   padding: 2rem 3rem;
-  box-shadow: 0 0 15px var(--glow-color);
+  /* box-shadow: 0 0 15px var(--glow-color); */
   max-width: 600px;
   font-family: var(--font-display);
 }
@@ -233,7 +220,7 @@ main {
 /* Blog Posts Section */
 .blog-posts {
   position: relative;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     #000103 5%,
     #0a1636 15%,
@@ -244,7 +231,7 @@ main {
     #f9ad6a 90%,
     #f4d03f 95%,
     #fefc2d 100%
-  );
+  ); */
   background-size: 100% 100%;
   padding: 4rem 2rem;
   display: grid;
