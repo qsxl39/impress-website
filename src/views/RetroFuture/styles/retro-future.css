@@ -1,49 +1,22 @@
-/* RetroFuture Theme Styles */
-.retro-future-theme {
-  /* 基础变量 */
-  --primary-color: #f4d03f; /* Bright yellow */
-  --secondary-color: #16a085; /* Teal */
-  --text-color: #e0e0e0; /* Light grey */
-  --background-color: #0a1128; /* Deep blue */
-  --panel-color: rgba(10, 17, 40, 0.85); /* Semi-transparent deep blue */
-  --border-color: #2c3e50; /* Darker blue/grey */
-  --accent-color: #e74c3c; /* Red */
-  --glow-color: rgba(0, 191, 255, 0.7); /* Cyan glow */
-  --font-mono: 'Space Mono', monospace;
-  --font-display: 'VT323', monospace;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* 将原来的全局样式改为作用域样式 */
-.retro-future-theme {
-  /* 基础样式 */
-  color: var(--text-color);
-  background-color: var(--background-color);
+body {
   font-family: var(--font-mono);
+  color: var(--text-color);
+  background-color: #000103; /* Base background for the whole page */
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-.retro-future-theme a {
-  color: var(--secondary-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.retro-future-theme a:hover {
-  color: var(--primary-color);
-}
-
-/* 容器样式 */
-.retro-future-theme .retro-future-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative;
-}
-
-/* 头部样式 */
-.retro-future-theme header {
-  position: fixed;
+/* Header Styles */
+header {
+  position: fixed; /* Fixed header */
   top: 0;
   left: 0;
   width: 100%;
@@ -51,70 +24,77 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: rgba(10, 17, 40, 0.8);
+  background-color: rgba(10, 17, 40, 0.8); /* Semi-transparent */
   backdrop-filter: blur(5px);
   border-bottom: 1px solid rgba(44, 62, 80, 0.5);
   z-index: 100;
   transition: background-color 0.3s ease;
 }
 
-/* 其他样式保持不变，但都加上 .retro-future-theme 前缀 */
-.retro-future-theme .hero {
+/* Main Content Area */
+main {
+  padding-top: 100px; /* Add padding to prevent content overlap with fixed header */
+  flex-grow: 1; /* Ensure main takes up available space */
+}
+
+/* Hero Section Styles */
+.hero {
   height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background-color: #000103;
-  padding: 2rem;
+  background-color: #000103; /* Ensure dark background behind stars */
 }
 
-.retro-future-theme .hero-content {
-  text-align: center;
-  z-index: 2;
-  padding: 2.5rem 3rem;
-  border-radius: 2px;
-  border: 2px solid var(--primary-color);
+.stars {
+  background: #000 url('../images/background/YKY28eT.png') repeat top center;
+  z-index: 0;
+  opacity: 1; /* Animated */
+  animation: twinkle-stars 4s ease-in-out infinite;
 }
 
-.retro-future-theme .hero-content h1 {
-  font-family: var(--font-display);
-  font-size: 3.5rem; /* 增大字体 */
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
+.twinkling {
+  background: transparent url('../images/background/XYMF4ca.png') repeat top center;
+  z-index: 1;
+  animation: move-twink-back 200s linear infinite;
 }
 
-.retro-future-theme .hero-content p {
-  font-family: var(--font-mono);
-  font-size: 1rem; /* 增大字体 */
-  color: var(--text-color);
-  line-height: 1.6;
-  margin: 0 auto;
-}
-
-.retro-future-theme .stars {
+/* 星空效果 */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; /* Adjusted to cover potential area */
   /* background: #000 url('https://i.imgur.com/YKY28eT.png') repeat top center; */
   z-index: 0;
   opacity: 1;
   animation: twinkle-stars 4s ease-in-out infinite;
 }
 
-.retro-future-theme .twinkling {
-  /* background: transparent url('https://i.imgur.com/XYMF4ca.png') repeat top center; */
-  z-index: 1;
-  animation: move-twink-back 200s linear infinite;
-}
-
-/* 动画定义 */
 @keyframes twinkle-stars {
-  0%,
-  100% {
+  0% {
     opacity: 0.7;
   }
   50% {
     opacity: 1;
   }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.twinkling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; /* Adjusted */
+  /* background: transparent url('https://i.imgur.com/XYMF4ca.png') repeat top center; */
+  z-index: 1;
+  animation: move-twink-back 200s linear infinite;
 }
 
 @keyframes move-twink-back {
@@ -124,4 +104,130 @@
   to {
     background-position: -10000px 5000px;
   }
+}
+
+/* 博客内容区渐变背景 - Applied potentially to main or a wrapper */
+.content-background-gradient {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    #000103 5%,
+    #0a1636 15%,
+    #0c1a3d 20%,
+    #1a3a6c 35%,
+    #7c5e9b 55%,
+    #e06377 75%,
+    #f9ad6a 90%,
+    #f4d03f 95%,
+    #fefc2d 100%
+  );
+  background-size: 100% 100%;
+  padding: 4rem 2rem; /* Example padding */
+}
+
+/* Blog Posts Section */
+.blog-posts {
+  position: relative;
+  /* background: linear-gradient(
+    to bottom,
+    #000103 5%,
+    #0a1636 15%,
+    #0c1a3d 20%,
+    #1a3a6c 35%,
+    #7c5e9b 55%,
+    #e06377 75%,
+    #f9ad6a 90%,
+    #f4d03f 95%,
+    #fefc2d 100%
+  ); */
+  background-size: 100% 100%;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Slightly smaller min */
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  background-color: rgba(10, 17, 40, 0.7);
+  /* border: 1px solid var(--glow-color); */
+  padding: 2rem 3rem;
+  /* box-shadow: 0 0 15px var(--glow-color); */
+  max-width: 600px;
+  font-family: var(--font-display);
+}
+
+.hero-content p {
+  font-family: var(--font-mono); /* Use mono for paragraph */
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: var(--text-color);
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+* Example Post Styling */ .blog-posts {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.post-card {
+  background: rgba(10, 17, 40, 0.7); /* Use semi-transparent panel color */
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(244, 208, 63, 0.2);
+}
+
+.post-card h3 {
+  color: var(--primary-color);
+  font-family: var(--font-display);
+  margin-top: 0;
+}
+
+.post-card .meta {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.post-card p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+.post-card button {
+  background: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.post-card button:hover {
+  background: var(--accent-color);
+  color: var(--text-color);
+}
+
+footer {
+  border-top: 1px solid var(--border-color);
+  border-bottom: none;
+  text-align: center;
+  margin-top: auto; /* Push footer to bottom */
 }

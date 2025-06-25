@@ -28,7 +28,7 @@ const getImageUrl = (imgPath: string) => {
         <div class="hero-content">
           <h1>Exploring Tomorrow<br />With Yesterday's Tools</h1>
           <p>
-            A personal chronicle of space exploration and the<br />beautiful contradiction of
+            A personal chronicle of space exploration and the beautiful contradiction of
             retro-futurism
           </p>
         </div>
@@ -54,13 +54,36 @@ const getImageUrl = (imgPath: string) => {
 </template>
 
 <style scoped>
+.retro-future-theme {
+  /* 基础变量 */
+  --primary-color: #f4d03f; /* Bright yellow */
+  --secondary-color: #16a085; /* Teal */
+  --text-color: #e0e0e0; /* Light grey */
+  --background-color: #0a1128; /* Deep blue */
+  --panel-color: rgba(10, 17, 40, 0.85); /* Semi-transparent deep blue */
+  --border-color: #2c3e50; /* Darker blue/grey */
+  --accent-color: #e74c3c; /* Red */
+  --glow-color: rgba(0, 191, 255, 0.7); /* Cyan glow */
+  --font-mono: 'Space Mono', monospace;
+  --font-display: 'VT323', monospace;
+}
+.hero-content {
+  max-width: none !important;
+}
 .hero-content h1 {
-  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  color: var(--primary-color);
   margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 0 0 10px rgba(244, 208, 63, 0.7);
 }
 
+
 .hero-content p {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 h2 {
@@ -86,13 +109,30 @@ h2 {
 .moon {
   position: absolute;
   margin-left: 3%;
-  top: 30px;
-  right: 40px;
-  width: 80px;
-  height: 80px;
-  background-color: #f0f0f0;
+  top: 50px;
+  right: 80px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #fff 0%,
+    #f5f5f5 20%,
+    #e0e0e0 40%,
+    #d0d0d0 60%,
+    #c0c0c0 80%,
+    #a0a0a0 100%
+  );
   border-radius: 50%;
-  box-shadow: 0 0 20px #ffffff, inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
   z-index: 1;
+}
+
+.retro-future-theme .hero-content {
+  text-align: center;
+  z-index: 2;
+  padding: 2.5rem 3rem;
+  border-radius: 2px;
+  border: 2px solid var(--primary-color);
+  display: inline-block;
 }
 </style>
