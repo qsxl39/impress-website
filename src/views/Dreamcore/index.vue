@@ -2,23 +2,6 @@
   <div class="dreamcore-theme">
     <AppHeader theme-class="dreamcore-theme" />
     <main class="dreamcore-container">
-      <div class="hero">
-        <div class="hero-content">
-          <h1>梦核</h1>
-          <p>潜入潜意识的边缘</p>
-        </div>
-      </div>
-      <div class="content-section">
-        <div class="post-grid">
-          <div v-for="post in posts" :key="post.id" class="post-card">
-            <img :src="getImageUrl(post.image)" :alt="post.title" />
-            <h3>{{ post.title }}</h3>
-            <p class="meta">{{ post.author }} · {{ post.date }}</p>
-            <p>{{ post.excerpt }}</p>
-            <button @click="viewPost(post)">探索深渊</button>
-          </div>
-        </div>
-      </div>
     </main>
     <AppFooter theme-class="dreamcore-theme" />
   </div>
@@ -46,4 +29,6 @@ const getImageUrl = (imgPath: string) => {
 .dreamcore {
   padding: 20px;
 }
+
+
 </style>

@@ -36,16 +36,30 @@ main {
   padding-top: 100px; /* Add padding to prevent content overlap with fixed header */
   flex-grow: 1; /* Ensure main takes up available space */
 }
-
-/* Hero Section Styles */
-.hero {
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background-color: #000103; /* Ensure dark background behind stars */
+@keyframes twinkle-stars {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+@keyframes move-twink-back {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -10000px 5000px;
+  }
+}
+footer {
+  border-top: 1px solid var(--border-color);
+  border-bottom: none;
+  text-align: center;
+  margin-top: auto; /* Push footer to bottom */
 }
 
 .stars {
@@ -59,175 +73,4 @@ main {
   background: transparent url('../images/background/XYMF4ca.png') repeat top center;
   z-index: 1;
   animation: move-twink-back 200s linear infinite;
-}
-
-/* 星空效果 */
-.stars {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0; /* Adjusted to cover potential area */
-  /* background: #000 url('https://i.imgur.com/YKY28eT.png') repeat top center; */
-  z-index: 0;
-  opacity: 1;
-  animation: twinkle-stars 4s ease-in-out infinite;
-}
-
-@keyframes twinkle-stars {
-  0% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.7;
-  }
-}
-
-.twinkling {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0; /* Adjusted */
-  /* background: transparent url('https://i.imgur.com/XYMF4ca.png') repeat top center; */
-  z-index: 1;
-  animation: move-twink-back 200s linear infinite;
-}
-
-@keyframes move-twink-back {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -10000px 5000px;
-  }
-}
-
-/* 博客内容区渐变背景 - Applied potentially to main or a wrapper */
-.content-background-gradient {
-  position: relative;
-  background: linear-gradient(
-    to bottom,
-    #000103 5%,
-    #0a1636 15%,
-    #0c1a3d 20%,
-    #1a3a6c 35%,
-    #7c5e9b 55%,
-    #e06377 75%,
-    #f9ad6a 90%,
-    #f4d03f 95%,
-    #fefc2d 100%
-  );
-  background-size: 100% 100%;
-  padding: 4rem 2rem; /* Example padding */
-}
-
-/* Blog Posts Section */
-.blog-posts {
-  position: relative;
-  /* background: linear-gradient(
-    to bottom,
-    #000103 5%,
-    #0a1636 15%,
-    #0c1a3d 20%,
-    #1a3a6c 35%,
-    #7c5e9b 55%,
-    #e06377 75%,
-    #f9ad6a 90%,
-    #f4d03f 95%,
-    #fefc2d 100%
-  ); */
-  background-size: 100% 100%;
-  padding: 4rem 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Slightly smaller min */
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  background-color: rgba(10, 17, 40, 0.7);
-  /* border: 1px solid var(--glow-color); */
-  padding: 2rem 3rem;
-  /* box-shadow: 0 0 15px var(--glow-color); */
-  max-width: 600px;
-  font-family: var(--font-display);
-}
-
-.hero-content p {
-  font-family: var(--font-mono); /* Use mono for paragraph */
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  color: var(--text-color);
-  letter-spacing: 1px;
-  line-height: 1.5;
-}
-
-* Example Post Styling */ .blog-posts {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.post-card {
-  background: rgba(10, 17, 40, 0.7); /* Use semi-transparent panel color */
-  border: 1px solid var(--border-color);
-  padding: 1.5rem;
-  border-radius: 4px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.post-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(244, 208, 63, 0.2);
-}
-
-.post-card h3 {
-  color: var(--primary-color);
-  font-family: var(--font-display);
-  margin-top: 0;
-}
-
-.post-card .meta {
-  font-size: 0.8rem;
-  color: var(--secondary-color);
-  margin-bottom: 1rem;
-}
-
-.post-card p {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  color: var(--text-color);
-}
-.post-card button {
-  background: var(--primary-color);
-  color: var(--background-color);
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  border-radius: 2px;
-  transition: background-color 0.3s ease;
-}
-
-.post-card button:hover {
-  background: var(--accent-color);
-  color: var(--text-color);
-}
-
-footer {
-  border-top: 1px solid var(--border-color);
-  border-bottom: none;
-  text-align: center;
-  margin-top: auto; /* Push footer to bottom */
 }
