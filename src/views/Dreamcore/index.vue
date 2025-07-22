@@ -1,15 +1,14 @@
 <template>
   <div class="dreamcore-theme">
     <AppHeader theme-class="dreamcore-theme" />
-    <main class="dreamcore-container">
-    </main>
+    <main class="dreamcore-container"></main>
     <AppFooter theme-class="dreamcore-theme" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { posts, type Post } from '../../data/posts'
+import { posts, type Post } from './data/posts'
 import './styles/dreamcore.css'
 import AppHeader from '../../components/AppHeader.vue'
 import AppFooter from '../../components/AppFooter.vue'
@@ -29,6 +28,4 @@ const getImageUrl = (imgPath: string) => {
 .dreamcore {
   padding: 20px;
 }
-
-
 </style>
