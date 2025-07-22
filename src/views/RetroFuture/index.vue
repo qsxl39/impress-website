@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { posts, type Post } from '../../data/posts'
+import { posts, type Post } from './data/posts'
 import './styles/retro-future.css'
 import AppHeader from '../../components/AppHeader.vue'
 import AppFooter from '../../components/AppFooter.vue'
