@@ -1,48 +1,55 @@
 <template>
-  <div ref="threeContainer" class="three-canvas-container"></div>
+  <div class="moon-canvas-container">
+    <canvas ref="canvasRef"></canvas>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-const threeContainer = ref<HTMLElement | null>(null)
-let renderer: THREE.WebGLRenderer | null = null
-let scene: THREE.Scene | null = null
-let camera: THREE.PerspectiveCamera | null = null
-let controls: OrbitControls | null = null
-let animationId: number | null = null
+// 核心引用和变量
+const canvasRef = ref<HTMLCanvasElement | null>(null)
+let isAutoRotating = ref(false) // 控制是否自动旋转
+let scene: THREE.Scene
+let camera: THREE.PerspectiveCamera
+let renderer: THREE.WebGLRenderer
+let controls: OrbitControls
 let model: THREE.Object3D | null = null
+let animationId: number
 
-const isMobile = ref(false)
+// 响应式尺寸处理
+const isMobile = ref(window.innerWidth <= 500)
 
-function handleResize() {
-  if (!threeContainer.value || !camera || !renderer) return
-  camera.aspect = threeContainer.value.clientWidth / threeContainer.value.clientHeight
-  camera.updateProjectionMatrix()
-  renderer.setSize(threeContainer.value.clientWidth, threeContainer.value.clientHeight)
-}
+// 初始化Three.js场景
+function initScene() {
+  if (!canvasRef.value) return
 
-function detectMobile() {
-  isMobile.value = window.matchMedia('(max-width: 500px)').matches
-}
-
-function initThree() {
-  if (!threeContainer.value) return
+  // 创建基础场景元素
   scene = new THREE.Scene()
-  camera = new THREE.PerspectiveCamera(25, threeContainer.value.clientWidth / threeContainer.value.clientHeight, 0.1, 1000)
-  camera.position.set(20, 3, 5)
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true })
-  renderer.setSize(threeContainer.value.clientWidth, threeContainer.value.clientHeight)
-  renderer.setPixelRatio(window.devicePixelRatio)
-  renderer.shadowMap.enabled = true
-  threeContainer.value.appendChild(renderer.domElement)
+  camera = new THREE.PerspectiveCamera(25, getAspectRatio(), 0.1, 1000)
+  renderer = new THREE.WebGLRenderer({
+    canvas: canvasRef.value,
+    antialias: true,
+    alpha: true,
+    preserveDrawingBuffer: true,
+  })
 
-  // 灯光
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.15)
-  scene.add(hemiLight)
+  // 配置相机和渲染器
+  camera.position.set(20, 3, 5) // 确保相机位置能完整看到模型
+  renderer.setPixelRatio(window.devicePixelRatio)
+  renderer.setSize(canvasRef.value.clientWidth, canvasRef.value.clientHeight)
+  renderer.shadowMap.enabled = true
+
+  // 添加基础灯光
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x000000, 6))
+  const pointLight = new THREE.PointLight(0xffffff, 80)
+  pointLight.position.set(0, 0, 0)
+  pointLight.castShadow = false
+  scene.add(pointLight)
+
   const spotLight = new THREE.SpotLight(0xffffff, 1)
   spotLight.position.set(-20, 50, 10)
   spotLight.angle = 0.12
@@ -50,84 +57,116 @@ function initThree() {
   spotLight.castShadow = true
   spotLight.shadow.mapSize.set(1024, 1024)
   scene.add(spotLight)
-  const pointLight = new THREE.PointLight(0xffffff, 1)
-  scene.add(pointLight)
 
-  // OrbitControls
+  // 配置控制器（禁用所有手动交互）
   controls = new OrbitControls(camera, renderer.domElement)
+  controls.enablePan = false
+  controls.enableRotate = false
   controls.enableZoom = false
-  controls.maxPolarAngle = Math.PI / 2
-  controls.minPolarAngle = Math.PI / 2
+  controls.enableDamping = false
+  controls.autoRotate = false // 初始不自转
+  controls.autoRotateSpeed = 1.0 // 适当调快旋转速度
 
-  // 加载GLTF模型
-  const loader = new GLTFLoader()
-  loader.load(
-    '/desktop_pc/scene.gltf',
+  // 加载月球模型
+  new GLTFLoader().load(
+    '/moon/scene.gltf',
     (gltf) => {
       model = gltf.scene
-      model.scale.set(isMobile.value ? 0.7 : 0.75, isMobile.value ? 0.7 : 0.75, isMobile.value ? 0.7 : 0.75)
-      model.position.set(0, isMobile.value ? -3 : -3.25, isMobile.value ? -2.2 : -1.5)
-      model.rotation.set(-0.01, -0.2, -0.1)
-      scene!.add(model)
+      model.scale.set(8, 8, 8)
+
+      // 计算模型中心并居中
+      const box = new THREE.Box3().setFromObject(model)
+      const center = box.getCenter(new THREE.Vector3()) // 模型中心坐标
+      model.position.set(-center.x, -center.y, -center.z) // 模型移到原点
+
+      // 关键：控制器围绕模型中心旋转
+      controls.target.copy(center) // 旋转目标 = 模型中心
+      controls.update() // 立即更新控制器状态
+
+      model.rotation.set(0.01, 1.4, 0) // 初始角度
+      scene.add(model)
     },
     undefined,
-    (error) => {
-      // 加载失败时显示一个立方体
-      const geometry = new THREE.BoxGeometry()
-      const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-      const cube = new THREE.Mesh(geometry, material)
-      scene!.add(cube)
-    }
+    () => console.error('月球模型加载失败')
   )
 
+  // 启动动画循环
   animate()
 }
 
+// 动画循环：始终更新控制器，确保 autoRotate 生效
 function animate() {
   animationId = requestAnimationFrame(animate)
-  if (renderer && scene && camera) {
-    renderer.render(scene, camera)
-  }
+  controls.update() // 必须持续调用，autoRotate 才会生效
+  renderer.render(scene, camera)
 }
 
-function disposeThree() {
-  if (animationId) cancelAnimationFrame(animationId)
-  if (controls) controls.dispose()
-  if (renderer) {
-    renderer.dispose()
-    if (renderer.domElement && renderer.domElement.parentNode) {
-      renderer.domElement.parentNode.removeChild(renderer.domElement)
-    }
+// 监听 isAutoRotating 变化，同步控制器自动旋转状态
+watch(isAutoRotating, (newVal) => {
+  if (controls) {
+    controls.autoRotate = newVal
   }
-  scene = null
-  camera = null
-  renderer = null
-  controls = null
-  model = null
-}
-
-onMounted(() => {
-  detectMobile()
-  window.addEventListener('resize', handleResize)
-  window.addEventListener('resize', detectMobile)
-  initThree()
 })
+
+// 计算宽高比
+function getAspectRatio() {
+  if (!canvasRef.value) return 1
+  return canvasRef.value.clientWidth / canvasRef.value.clientHeight
+}
+
+// 响应窗口大小变化
+function handleResize() {
+  isMobile.value = window.innerWidth <= 500
+  if (!canvasRef.value) return
+
+  camera.aspect = getAspectRatio()
+  camera.updateProjectionMatrix()
+  renderer.setSize(canvasRef.value.clientWidth, canvasRef.value.clientHeight)
+}
+
+// 生命周期管理
+onMounted(() => {
+  initScene()
+  window.addEventListener('resize', handleResize)
+  // 点击 canvas 切换自转状态
+  if (canvasRef.value) {
+    canvasRef.value.addEventListener('click', () => {
+      isAutoRotating.value = !isAutoRotating.value
+    })
+  }
+})
+
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
-  window.removeEventListener('resize', detectMobile)
-  disposeThree()
+  cancelAnimationFrame(animationId)
+  controls.dispose()
+  renderer.dispose()
+  if (canvasRef.value) {
+    canvasRef.value.removeEventListener('click', () => {
+      isAutoRotating.value = !isAutoRotating.value
+    })
+  }
 })
 </script>
 
 <style scoped>
-.three-canvas-container {
-  width: 100%;
-  height: 400px;
+.moon-canvas-container {
+  width: 100px;
+  height: 100px;
   background: transparent;
+  position: relative;
 }
+
+.moon-canvas-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
 @media (max-width: 500px) {
-  .three-canvas-container {
+  .moon-canvas-container {
+    width: 250px;
     height: 250px;
   }
 }
-</style> 
+</style>

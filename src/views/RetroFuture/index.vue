@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { posts, type Post } from './data/posts'
-import './styles/retro-future.css'
-import AppHeader from '../../components/AppHeader.vue'
-import AppFooter from '../../components/AppFooter.vue'
-
-const router = useRouter()
-
-function viewPost(post: Post) {
-  router.push({ name: 'post', params: { id: post.id } })
-}
-
-const getImageUrl = (imgPath: string) => {
-  return imgPath
-}
-</script>
-
 <template>
   <div class="retro-future-theme">
     <div class="crt-overlay"></div>
@@ -24,7 +6,17 @@ const getImageUrl = (imgPath: string) => {
       <div class="hero">
         <div class="stars"></div>
         <div class="twinkling"></div>
-        <div class="moon"></div>
+        <!-- 模拟的月球，添加点击事件和响应式控制 -->
+        <div
+          class="moon"
+          @click="handleMoonClick"
+          v-show="showSimulatedMoon"
+          :style="{ opacity: simulatedMoonOpacity }"
+        ></div>
+        <!-- 3D 月球组件，始终存在，默认被模拟月球覆盖或在下层 -->
+        <div class="three-moon">
+          <moonView :style="{ opacity: threeMoonOpacity }" />
+        </div>
         <div class="hero-content">
           <h1>Exploring Tomorrow<br />With Yesterday's Tools</h1>
           <p>
@@ -53,9 +45,69 @@ const getImageUrl = (imgPath: string) => {
   </div>
 </template>
 
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { posts, type Post } from './data/posts'
+import './styles/retro-future.css'
+import AppHeader from '../../components/AppHeader.vue'
+import AppFooter from '../../components/AppFooter.vue'
+import moonView from './components/canvas/moon.vue'
+import { ref } from 'vue'
+// 控制模拟月球是否显示（点击后隐藏）
+const showSimulatedMoon = ref(true)
+// 模拟月球的透明度（用于渐变消失效果）
+const simulatedMoonOpacity = ref(1)
+// 3D 月球的透明度（渐变显示）
+const threeMoonOpacity = ref(0)
+
+const handleMoonClick = () => {
+  // 渐变步数（控制动画速度）
+  let step = 0
+  const totalSteps = 50 // 总步数，越大越慢
+
+  const fadeInterval = setInterval(() => {
+    if (step < totalSteps) {
+      // 模拟月球：每步降低 1/totalSteps
+      simulatedMoonOpacity.value -= 1 / totalSteps
+      // 3D 月球：每步提升 1/totalSteps
+      threeMoonOpacity.value += 1 / totalSteps
+      step++
+    } else {
+      showSimulatedMoon.value = false // 隐藏模拟月球
+      clearInterval(fadeInterval)
+    }
+  }, 20) // 每 20ms 执行一次，可调整速度
+}
+
+const router = useRouter()
+
+function viewPost(post: Post) {
+  router.push({ name: 'post', params: { id: post.id } })
+}
+
+const getImageUrl = (imgPath: string) => {
+  return imgPath
+}
+</script>
 <style scoped>
+/* 原有样式保持不变 */
+.moon {
+  /* 原有样式... */
+  cursor: pointer; /* 添加鼠标指针，提示可点击 */
+  transition: opacity 0.3s ease; /* 配合渐变效果 */
+}
+.three-moon {
+  position: absolute;
+  margin-left: 3%;
+  top: 80px;
+  right: 80px;
+  width: 100px;
+  height: 100px;
+  /* 确保 3D 月球默认在模拟月球下层，可根据实际调整层级 */
+  z-index: 0;
+}
 /* ---------------------
-   主题基础变量定义
+  主题基础变量定义
    --------------------- */
 .retro-future-theme {
   /* 色彩变量 */
@@ -181,7 +233,7 @@ const getImageUrl = (imgPath: string) => {
 .moon {
   position: absolute;
   margin-left: 3%;
-  top: 50px;
+  top: 80px;
   right: 80px;
   width: 100px;
   height: 100px;
@@ -196,9 +248,21 @@ const getImageUrl = (imgPath: string) => {
   );
   border-radius: 50%;
   box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
-  z-index: 1;
+  z-index: 12; /* 大幅提高层级，确保在星空、内容区等之上 */
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
+.three-moon {
+  position: absolute;
+  margin-left: 3%;
+  top: 80px;
+  right: 80px;
+  width: 100px;
+  height: 100px;
+  /* 3D 月球容器的 z-index 比模拟月球稍高或相同，根据需求调整 */
+  z-index: 11;
+}
 /* ---------------------
    内容区渐变背景
    --------------------- */
