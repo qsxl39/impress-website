@@ -7,7 +7,7 @@ export const posts = [
     excerpt: '在数字世界中，重新发现模拟数据存储的独特乐趣……',
     content:
       '在无缝数据流和无形云存储主导的时代，越来越多的人开始重新发现磁带的魅力。不仅仅是音乐，更是数据的载体。磁带未来主义设想了这样一个世界：80年代的技术不断进化，带来高容量、耐用且极具美感的数据存储方式。我们将深入改装社区，探讨22世纪磁带的挑战，以及有形数据的哲学意义。',
-    image: '/images/RetroFuture/1.webp',
+    image: '/images/RetroFuture/4.webp',
     tags: ['模拟', '复古科技', '数据存储'],
   },
   {
@@ -18,7 +18,7 @@ export const posts = [
     excerpt: '显像管的温暖光芒和深邃黑色在专业领域焕发新生……',
     content:
       '虽然平板显示器主导了消费市场，但阴极射线管技术依然存在。其近乎零延迟和极致黑色表现，使其在复古游戏、医学影像甚至高频交易可视化等领域不可替代。我们将探究电子枪背后的物理原理、制造与维护的挑战，并采访仍在修复这些玻璃巨兽的工匠。',
-    image: '/images/RetroFuture/2.webp',
+    image: '/images/RetroFuture/3.webp',
     tags: ['显示技术', '显像管', '复古游戏', '硬件'],
   },
   {
@@ -29,7 +29,7 @@ export const posts = [
     excerpt: '在光鲜的企业网络背后，隐藏着一个数字世界……',
     content:
       '官方城市网络明亮且受控，而暗网则充满了原始数据、海盗广播和加密通信。本指南将为你提供穿梭这些隐秘数字通道的必备工具与协议，从访问隐藏论坛到理解数据流礼仪。注意：探索风险自负。',
-    image: '/images/RetroFuture/3.webp',
+    image: '/images/RetroFuture/9.jpg',
     tags: ['赛博朋克', '网络', '新东京', '数字地下'],
   },
   // ... (Add the other 7 posts here following the same structure)
@@ -41,7 +41,7 @@ export const posts = [
     excerpt: '为星际旅途谱写旋律的声音……',
     content:
       '从小行星带中回荡的特雷门琴，到木星贸易站复杂的复节奏，宇宙飞船的船员们总是离不开音乐。我们将探索为零重力环境设计的便携合成器、受深空现象启发的独特音色，以及本周期最流行的"星际水手曲"。',
-    image: '/images/RetroFuture/4.webp',
+    image: '/images/RetroFuture/10.jpg',
     tags: ['音乐', '合成器', '太空旅行', '声音设计'],
   },
   {
@@ -96,7 +96,7 @@ export const posts = [
     excerpt: '从炫酷视觉到实用触感，全息控制的新纪元……',
     content:
       '早期全息技术重形式轻实用。如今的"触感全息"带来真实反馈，让三维数据与控制直观易用。我们将探讨背后的激光与声学技术、有效全息UI的设计原则，以及其在星舰导航、远程手术等领域的应用。',
-    image: '/images/RetroFuture/9.jpg',
+    image: '/images/RetroFuture/1.webp',
     tags: ['界面设计', '全息', 'UI/UX', '未来科技'],
   },
   {
@@ -107,7 +107,7 @@ export const posts = [
     excerpt: '当记忆与感知可被编辑，自我究竟何在？',
     content:
       '先进的神经接口让记忆与感官输入可被编辑和增强，创造出个性化现实。虽然带来治疗和娱乐的巨大潜力，但也引发了深刻的哲学问题。如果过去可以被重塑，现在可以被过滤，真正的自我又在哪里？我们将探讨可重写意识的伦理、潜力与悖论。',
-    image: '/images/RetroFuture/10.jpg',
+    image: '/images/RetroFuture/2.webp',
     tags: ['哲学', '赛博', '意识', '伦理', '未来研究'],
   },
 ]

@@ -422,7 +422,7 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 150px;
   padding: 4rem 0;
-  margin-bottom: 500px;
+  margin-bottom: 900px;
   /* 隐藏滚动条但保持功能 */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
