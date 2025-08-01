@@ -59,12 +59,17 @@ const showSimulatedMoon = ref(true)
 const simulatedMoonOpacity = ref(1)
 // 3D 月球的透明度（渐变显示）
 const threeMoonOpacity = ref(0)
-
+//创建点击音效
+const clickSound = new Audio('/sounds/bellding.mp3') // 替换为你的音效文件
 const handleMoonClick = () => {
   // 渐变步数（控制动画速度）
   let step = 0
   const totalSteps = 50 // 总步数，越大越慢
 
+  // 播放点击音效
+  clickSound.play().catch((err) => {
+    console.error('音效播放失败:', err) // 新增这行，查看具体错误
+  })
   const fadeInterval = setInterval(() => {
     if (step < totalSteps) {
       // 模拟月球：每步降低 1/totalSteps
