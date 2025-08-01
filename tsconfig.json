@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false, // 关闭 JS 文件的类型检查
+    "noImplicitAny": false, // 允许隐式 any 类型
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
