@@ -25,18 +25,22 @@
           </p>
         </div>
       </div>
-      <div class="content-background-gradient">
-        <div class="blog-posts" style="margin-bottom: 500px">
-          <div v-for="post in posts" :key="post.id" class="post-card">
-            <img
-              :src="getImageUrl(post.image)"
-              :alt="post.title"
-              style="width: 100%; height: 150px; object-fit: cover"
-            />
-            <h3>{{ post.title }}</h3>
-            <p class="meta">作者：{{ post.author }}　日期：{{ post.date }}</p>
-            <p>{{ post.excerpt }}</p>
-            <button @click="viewPost(post)">阅读全文</button>
+      <div class="wapper" ref="scrollWrapperRef">
+        <div class="blog-posts-container">
+          <div class="blog-posts" ref="scrollContentRef">
+            <div v-for="post in posts" :key="post.id" class="post-card">
+              <img
+                :src="getImageUrl(post.image)"
+                :alt="post.title"
+                class="post-image"
+                style="
+                  width: 1000px;
+                  height: 500px;
+                  object-fit: cover;
+                  display: block; /* 转为块级元素，独占一行，消除基线空白 */
+                "
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -47,20 +51,26 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { posts, type Post } from './data/posts'
+import { posts } from './data/posts.js'
+import type { Post } from './data/posts.d.ts'
 import './styles/retro-future.css'
 import AppHeader from '../../components/AppHeader.vue'
 import AppFooter from '../../components/AppFooter.vue'
 import moonView from './components/canvas/moon.vue'
 import { ref } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 // 控制模拟月球是否显示（点击后隐藏）
 const showSimulatedMoon = ref(true)
 // 模拟月球的透明度（用于渐变消失效果）
 const simulatedMoonOpacity = ref(1)
 // 3D 月球的透明度（渐变显示）
 const threeMoonOpacity = ref(0)
+
 //创建点击音效
 const clickSound = new Audio('/sounds/bellding.mp3') // 替换为你的音效文件
+
 const handleMoonClick = () => {
   // 渐变步数（控制动画速度）
   let step = 0
@@ -93,7 +103,121 @@ function viewPost(post: Post) {
 const getImageUrl = (imgPath: string) => {
   return imgPath
 }
+
+//横向滑动
+// 横向滚动相关
+const scrollWrapperRef = ref<HTMLElement | null>(null)
+const scrollContentRef = ref<HTMLElement | null>(null)
+
+// 初始化横向滚动
+const initHorizontalScroll = () => {
+  const wrapper = scrollWrapperRef.value
+  const content = scrollContentRef.value
+
+  if (!wrapper || !content) {
+    console.log('DOM elements not found')
+    return
+  }
+
+  console.log('Found DOM elements:', { wrapper, content })
+
+  // 确保GSAP插件已注册
+  gsap.registerPlugin(ScrollTrigger)
+
+  // 等待DOM完全渲染
+  setTimeout(() => {
+    // 计算滚动距离
+    const contentWidth = content.scrollWidth
+    const wrapperWidth = wrapper.clientWidth
+    const distance = contentWidth - wrapperWidth
+    
+    console.log('Dimensions:', {
+      contentWidth,
+      wrapperWidth,
+      distance,
+      windowHeight: window.innerHeight
+    })
+
+    if (distance <= 0) {
+      console.log('No horizontal scroll needed')
+      return
+    }
+
+    // 设置足够的高度触发垂直滚动
+    const wrapperHeight = distance + window.innerHeight * 2
+    wrapper.style.height = `${wrapperHeight}px`
+    console.log('Set wrapper height to:', wrapperHeight)
+
+    // 清理可能存在的旧实例
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+
+    // 创建滚动触发器
+    const trigger = ScrollTrigger.create({
+      trigger: wrapper,
+      start: 'top top',
+      end: `+=${distance}`,
+      scrub: 1,
+      onUpdate: (self) => {
+        const progress = self.progress
+        const translateX = -progress * distance
+        console.log('Scroll progress:', progress, 'TranslateX:', translateX)
+        
+        // 添加平滑过渡
+        gsap.to(content, {
+          x: translateX,
+          duration: 0.1,
+          ease: 'none'
+        })
+      }
+    })
+
+    console.log('ScrollTrigger created:', trigger)
+  }, 100)
+}
+
+onMounted(() => {
+  console.log('Component mounted, initializing horizontal scroll...')
+  
+  // 测试GSAP是否正常工作
+  console.log('GSAP version:', gsap.version)
+  
+  // 确保GSAP插件已注册
+  gsap.registerPlugin(ScrollTrigger)
+  console.log('GSAP ScrollTrigger registered')
+
+  // 简单的GSAP测试
+  const testElement = scrollContentRef.value
+  if (testElement) {
+    gsap.to(testElement, {
+      x: 100,
+      duration: 2,
+      ease: 'power2.out',
+      onComplete: () => {
+        console.log('GSAP test animation completed')
+        gsap.to(testElement, { x: 0, duration: 1 })
+      }
+    })
+  }
+
+  // 添加延迟确保DOM完全渲染
+  setTimeout(() => {
+    console.log('Starting horizontal scroll initialization...')
+    initHorizontalScroll()
+  }, 1000)
+
+  // 监听窗口大小变化
+  window.addEventListener('resize', () => {
+    console.log('Window resized, reinitializing...')
+    setTimeout(initHorizontalScroll, 100)
+  })
+})
+
+onBeforeUnmount(() => {
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  window.removeEventListener('resize', initHorizontalScroll)
+})
 </script>
+
 <style scoped>
 /* 原有样式保持不变 */
 .moon {
@@ -271,7 +395,7 @@ const getImageUrl = (imgPath: string) => {
 /* ---------------------
    内容区渐变背景
    --------------------- */
-.content-background-gradient {
+.wapper {
   position: relative;
   background: linear-gradient(
     to bottom,
@@ -287,29 +411,56 @@ const getImageUrl = (imgPath: string) => {
   );
   background-size: 100% 100%;
   padding: 4rem 2rem;
+  /* 初始高度，会被JS动态调整 */
+  min-height: 100vh;
 }
 
 /* ---------------------
-   博客文章列表样式
+  博客文章列表样式 - 横向滚动
    --------------------- */
-.blog-posts {
-  position: relative;
-  padding: 4rem 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-size: 100% 100%;
+.blog-posts-container {
+  position: sticky;
+  top: 150px;
+  padding: 4rem 0;
   margin-bottom: 500px;
+  /* 隐藏滚动条但保持功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  /* 平滑滚动效果 */
+  scroll-behavior: smooth;
+  /* 添加一些内边距确保内容不被遮挡 */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  /* 确保容器有足够的宽度 */
+  width: 100%;
+  overflow: hidden;
+}
+
+.blog-posts-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.blog-posts {
+  display: flex;
+  gap: 2rem;
+  padding: 0 2rem;
+  min-width: max-content;
+  /* 确保内容可以横向滚动 */
+  width: max-content;
+  /* 确保transform正常工作 */
+  will-change: transform;
+  transform: translateX(0);
 }
 
 .post-card {
   background: rgba(10, 17, 40, 0.7);
   border: 1px solid var(--border-color);
-  padding: 1.5rem;
   border-radius: 4px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* 横向布局的卡片样式 */
+  min-width: 350px;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
 .post-card:hover {
@@ -357,5 +508,43 @@ const getImageUrl = (imgPath: string) => {
 .post-card button:hover {
   background: var(--accent-color);
   color: var(--text-color);
+}
+
+/* 图片样式 */
+.post-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px 4px 0 0;
+}
+
+/* 内容区域样式 */
+.post-content {
+  padding: 1.5rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .blog-posts-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .post-card {
+    min-width: 280px;
+    max-width: 320px;
+  }
+
+  .post-content {
+    padding: 1rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .post-content p {
+    font-size: 0.85rem;
+  }
 }
 </style>
