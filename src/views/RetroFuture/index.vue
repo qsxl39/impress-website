@@ -130,12 +130,12 @@ const initHorizontalScroll = () => {
     const contentWidth = content.scrollWidth
     const wrapperWidth = wrapper.clientWidth
     const distance = contentWidth - wrapperWidth
-    
+
     console.log('Dimensions:', {
       contentWidth,
       wrapperWidth,
       distance,
-      windowHeight: window.innerHeight
+      windowHeight: window.innerHeight,
     })
 
     if (distance <= 0) {
@@ -149,7 +149,7 @@ const initHorizontalScroll = () => {
     console.log('Set wrapper height to:', wrapperHeight)
 
     // 清理可能存在的旧实例
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
 
     // 创建滚动触发器
     const trigger = ScrollTrigger.create({
@@ -161,14 +161,14 @@ const initHorizontalScroll = () => {
         const progress = self.progress
         const translateX = -progress * distance
         console.log('Scroll progress:', progress, 'TranslateX:', translateX)
-        
+
         // 添加平滑过渡
         gsap.to(content, {
           x: translateX,
           duration: 0.1,
-          ease: 'none'
+          ease: 'none',
         })
-      }
+      },
     })
 
     console.log('ScrollTrigger created:', trigger)
@@ -177,10 +177,10 @@ const initHorizontalScroll = () => {
 
 onMounted(() => {
   console.log('Component mounted, initializing horizontal scroll...')
-  
+
   // 测试GSAP是否正常工作
   console.log('GSAP version:', gsap.version)
-  
+
   // 确保GSAP插件已注册
   gsap.registerPlugin(ScrollTrigger)
   console.log('GSAP ScrollTrigger registered')
@@ -195,7 +195,7 @@ onMounted(() => {
       onComplete: () => {
         console.log('GSAP test animation completed')
         gsap.to(testElement, { x: 0, duration: 1 })
-      }
+      },
     })
   }
 
@@ -213,7 +213,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
   window.removeEventListener('resize', initHorizontalScroll)
 })
 </script>
