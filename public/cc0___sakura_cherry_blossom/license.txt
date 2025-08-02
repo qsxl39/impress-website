@@ -1,8 +1,0 @@
-Model Information:
-* title:	CC0 桜🌸 ソメイヨシノ Sakura Cherry Blossom
-* source:	https://sketchfab.com/3d-models/cc0-sakura-cherry-blossom-f5e6f5a985ea4fc2a14ee0b4b37572b5
-* author:	ffish.asia / floraZia.com (https://sketchfab.com/ffishAsia-and-floraZia)
-
-Model License:
-* license type:	CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)
-* requirements:	Credit is not mandatory. Commercial use is allowed.
