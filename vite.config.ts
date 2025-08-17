@@ -14,8 +14,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)), // Configure the '@' alias
     },
   },
-  build: {
-    // 禁用sourcemap生成，不再产生.map文件
-    sourcemap: false,
-  },
 })
