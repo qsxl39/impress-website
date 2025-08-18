@@ -9,14 +9,13 @@
 body {
   font-family: var(--font-mono);
   color: var(--text-color);
-  background-color: #000103; /* Base background for the whole page */
+  background-color: #000103;
   line-height: 1.6;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
-/* Header Styles */
 header {
-  position: fixed; /* Fixed header */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -24,17 +23,16 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: rgba(10, 17, 40, 0.8); /* Semi-transparent */
+  background-color: rgba(10, 17, 40, 0.8);
   backdrop-filter: blur(5px);
   border-bottom: 1px solid rgba(44, 62, 80, 0.5);
   z-index: 100;
   transition: background-color 0.3s ease;
 }
 
-/* Main Content Area */
 main {
-  padding-top: 100px; /* Add padding to prevent content overlap with fixed header */
-  flex-grow: 1; /* Ensure main takes up available space */
+  padding-top: 100px;
+  flex-grow: 1;
 }
 @keyframes twinkle-stars {
   0% {
@@ -59,13 +57,13 @@ footer {
   border-top: 1px solid var(--border-color);
   border-bottom: none;
   text-align: center;
-  margin-top: auto; /* Push footer to bottom */
+  margin-top: auto;
 }
 
 .stars {
   background: #000 url('../images/background/YKY28eT.png') repeat top center;
   z-index: 0;
-  opacity: 1; /* Animated */
+  opacity: 1;
   animation: twinkle-stars 4s ease-in-out infinite;
 }
 
