@@ -30,7 +30,8 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { posts, type Post } from '../../data/posts'
+import { posts } from '../RetroFuture/data/posts.js'
+import type { Post } from '../RetroFuture/data/posts.d.ts'
 import './styles/railway.css'
 import AppHeader from '../../components/AppHeader.vue'
 import AppFooter from '../../components/AppFooter.vue'

@@ -72,7 +72,7 @@ function initScene() {
     '/plate/scene.gltf', // 注意：替换为你的盘子模型实际路径（需放在public目录下）
     (gltf) => {
       model = gltf.scene
-      model.scale.set(0.1, 0.1, 0.1) // 缩小盘子
+      model.scale.set(0.2, 0.2, 0.2) // 缩小盘子
 
       // 将模型移动到原点（以模型自身中心为参考）
       const box = new THREE.Box3().setFromObject(model)
@@ -100,9 +100,9 @@ function initScene() {
       const maxSize = Math.max(size.x, size.y, size.z)
 
       // 下移盘子：让其中心靠近屏幕下方，使下半部分更接近底部
-      plateGroup.position.set(0, -maxSize * 0.7, 0)
+      plateGroup.position.set(0, -maxSize * 0.51, 0)
 
-      camera.position.set(0, 0, maxSize * 3) // 调远相机，整体更小
+      camera.position.set(0, 0, maxSize * 1.1) // 调远相机，整体更小
       controls.target.set(0, 0, 0)
       controls.update()
     },
