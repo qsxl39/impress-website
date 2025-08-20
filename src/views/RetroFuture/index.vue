@@ -43,6 +43,9 @@
             </div>
           </div>
         </div>
+        <div class="three-plate">
+          <plateView />
+        </div>
       </div>
     </main>
     <AppFooter theme-class="retro-future-theme" />
@@ -57,6 +60,7 @@ import './styles/retro-future.css'
 import AppHeader from '../../components/AppHeader.vue'
 import AppFooter from '../../components/AppFooter.vue'
 import moonView from './components/canvas/moon.vue'
+import plateView from './components/canvas/plate.vue'
 import { ref } from 'vue'
 import { onMounted, onBeforeUnmount } from 'vue'
 import gsap from 'gsap'
@@ -546,5 +550,35 @@ onBeforeUnmount(() => {
   .post-content p {
     font-size: 0.85rem;
   }
+}
+
+/* 3D 板块定位样式 */
+.three-plate {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* 使用视口高度，确保有足够空间显示整个盘子 */
+  z-index: 1000; /* 确保在最上层 */
+  pointer-events: auto; /* 允许与3D画布交互 */
+}
+
+/* 调整底栏样式，确保与3D板块配合 */
+.retro-future-theme footer {
+  position: relative;
+  z-index: 999; /* 比3D板块稍低 */
+}
+
+/* 确保3D盘子容器能够自适应 */
+.three-plate .plate-canvas-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative;
+}
+
+.three-plate .plate-canvas-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
 </style>
