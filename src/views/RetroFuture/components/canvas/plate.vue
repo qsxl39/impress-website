@@ -99,10 +99,8 @@ function initScene() {
       const size = groupBox.getSize(new THREE.Vector3())
       const maxSize = Math.max(size.x, size.y, size.z)
 
-      // 下移盘子：让其中心靠近屏幕下方，使下半部分更接近底部
-      plateGroup.position.set(0, -maxSize * 0.51, 0)
-
-      camera.position.set(0, 0, maxSize * 1.1) // 调远相机，整体更小
+      // 调整相机位置，让盘子居中显示并完整可见
+      camera.position.set(0, 0, maxSize * 9.5) // 增加相机距离，确保盘子完整显示
       controls.target.set(0, 0, 0)
       controls.update()
     },

@@ -43,11 +43,35 @@
             </div>
           </div>
         </div>
-        <div class="three-plate">
-          <plateView />
-        </div>
       </div>
     </main>
+    <!-- <AppFooter theme-class="retro-future-theme" /> -->
+  </div>
+  <div class="retro-future-reverse">
+    <div class="three-plate">
+      <plateView />
+    </div>
+  </div>
+  <div class="retro-future-theme">
+    <div class="wapper" ref="scrollWrapperRef">
+      <div class="blog-posts-container">
+        <div class="blog-posts" ref="scrollContentRef">
+          <div v-for="post in posts2" :key="post.id" class="post-card">
+            <img
+              :src="getImageUrl(post.image)"
+              :alt="post.title"
+              class="post-image"
+              style="
+                width: 1000px;
+                height: 500px;
+                object-fit: cover;
+                display: block; /* 转为块级元素，独占一行，消除基线空白 */
+              "
+            />
+          </div>
+        </div>
+      </div>
+    </div>
     <AppFooter theme-class="retro-future-theme" />
   </div>
 </template>
@@ -55,6 +79,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { posts } from './data/posts.js'
+import { posts2 } from './data/posts2.js'
 import type { Post } from './data/posts.d.ts'
 import './styles/retro-future.css'
 import AppHeader from '../../components/AppHeader.vue'
@@ -257,6 +282,25 @@ onBeforeUnmount(() => {
   --font-mono: 'Space Mono', monospace; /* 等宽字体 */
   --font-display: 'VT323', monospace; /* 显示字体 */
 }
+.retro-future-reverse {
+  /* 和 wapper 高度对齐 */
+  min-height: 100vh; /* 或者 120vh，看你 wapper 的实际高度 */
+  display: flex;
+  align-items: flex-end; /* 让盘子靠底部 */
+  justify-content: center; /* 水平居中 */
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    #fefc2d 5%,
+    #f4d03f 15%,
+    #f9ad6a 30%,
+    #e06377 50%,
+    #7c5e9b 70%,
+    #1a3a6c 85%,
+    #0a1636 95%,
+    #000103 100%
+  ); /* 反向渐变，呼应前一个 */
+}
 
 /* ---------------------
    英雄区域整体样式
@@ -419,6 +463,26 @@ onBeforeUnmount(() => {
   min-height: 100vh;
 }
 
+.wrapper-reverse {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    #fefc2d 5%,
+    #f4d03f 10%,
+    #f9ad6a 20%,
+    #e06377 35%,
+    #7c5e9b 55%,
+    #1a3a6c 75%,
+    #0c1a3d 80%,
+    #0a1636 85%,
+    #000103 100%
+  );
+  background-size: 100% 100%;
+  padding: 4rem 2rem;
+  /* 初始高度，会被JS动态调整 */
+  min-height: 100vh;
+}
+
 /* ---------------------
   博客文章列表样式 - 横向滚动
    --------------------- */
@@ -561,6 +625,9 @@ onBeforeUnmount(() => {
   height: 100vh; /* 使用视口高度，确保有足够空间显示整个盘子 */
   z-index: 1000; /* 确保在最上层 */
   pointer-events: auto; /* 允许与3D画布交互 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 调整底栏样式，确保与3D板块配合 */
@@ -571,9 +638,11 @@ onBeforeUnmount(() => {
 
 /* 确保3D盘子容器能够自适应 */
 .three-plate .plate-canvas-container {
-  width: 100% !important;
-  height: 100% !important;
+  width: 70% !important;
+  height: 70% !important;
   position: relative;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 .three-plate .plate-canvas-container canvas {
